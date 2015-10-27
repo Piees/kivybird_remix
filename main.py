@@ -80,18 +80,19 @@ class Pipe(BaseWidget):
 class Fish(ImageWidget):
 
     def update(self, nap):
+        self.MOVELENGTH = 2
         print self
-        if (random.randint(1,10) <= 9):
+        if (random.randint(1,20) <= 19):
             if (random.randint(1,2) == 1) and (self.y<= 540): #random.randint(1,2) == 1    ||   self.y>= 100
-                self.y += 5
+                self.y += self.MOVELENGTH
             else:
                 if self.y >= 100:
-                    self.y -= 5
+                    self.y -= self.MOVELENGTH
         else:
             if self.y < 270:
-                self.y += 5
+                self.y += self.MOVELENGTH
             else:
-                self.y -= 5
+                self.y -= self.MOVELENGTH
 
 class Bullets(ImageWidget):
 
