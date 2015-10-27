@@ -61,7 +61,7 @@ class Pipe(BaseWidget):
     def __init__(self, **kwargs):
         super(Pipe, self).__init__(**kwargs)
 
-        for name in ('pipe', 'ptop'):
+        for name in ('sandstone_1', 'ptop'):
             self.load_tileable(name)
 
     def set_coords(self, coords, len):
