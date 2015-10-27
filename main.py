@@ -80,11 +80,17 @@ class Pipe(BaseWidget):
 class Fish(ImageWidget):
 
     def update(self, nap):
-        if (random.randint(1,2) == 1) and (self.y<= 540): #random.randint(1,2) == 1    ||   self.y>= 100
-            self.y += 5
-            #print self.y
+        print self
+        if (random.randint(1,10) <= 9):
+            if (random.randint(1,2) == 1) and (self.y<= 540): #random.randint(1,2) == 1    ||   self.y>= 100
+                self.y += 5
+            else:
+                if self.y >= 100:
+                    self.y -= 5
         else:
-            if self.y >= 100:
+            if self.y < 270:
+                self.y += 5
+            else:
                 self.y -= 5
 
 class Bullets(ImageWidget):
@@ -126,10 +132,10 @@ class Bird(ImageWidget):
 
 
 class KivyBirdApp(App):
-#512x197
     pipes = []
     playing = False
     gameover_switch = False
+    highscore = 0
 
     def on_start(self):
         self.spacing = 0.5 * self.root.width
@@ -137,10 +143,12 @@ class KivyBirdApp(App):
         self.score_label = self.root.ids.score_label
         self.bird = self.root.ids.bird
         self.fish = self.root.ids.fish
+        self.highscore_label = self.root.ids.highscore_label
         self.bullets = Bullets(source="images/5.png", size=(102,39),
             size_hint=(None, None), pos=self.fish.pos)
         self.gameover_label = self.root.ids.gameover_label
         self.root.add_widget(self.bullets)
+        self.highscore_label.text = "Highscore: " + str(self.highscore)
         self.score = 0
         Clock.schedule_interval(self.update, 1.0/500.0)
         Window.bind(on_key_down=self.on_key_down)
@@ -188,6 +196,9 @@ class KivyBirdApp(App):
                 p.ratio = random.uniform(0.25, 0.75)
 
         if self.test_game_over():
+            if self.score > self.highscore:
+                self.highscore = self.score
+            self.highscore_label.text = "Highscore: " + str(self.highscore)
             self.playing = False
 
     def test_game_over(self):
